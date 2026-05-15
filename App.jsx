@@ -195,8 +195,8 @@ function DeckEditor({ deck, onSave, onBack }) {
         <CardList cards={form.cards} onEdit={openEdit} onRemove={removeCard} />
       </Sec>
 
-      <button onClick={handleSave} style={S.saveBtn}>💾 デッキを保存</button>
       {cardModal && <CardModal data={cardModal.data} onSave={saveCard} onClose={() => setCardModal(null)} />}
+      <StickyFooter><button onClick={handleSave} style={S.saveBtn}>💾 デッキを保存</button></StickyFooter>
     </div>
   );
 }
@@ -546,9 +546,8 @@ function TournEditor({ tourn, onSave, onBack }) {
         </div>
       </Sec>
 
-      <button onClick={() => onSave(form)} style={S.saveBtn}>💾 大会を保存</button>
-
       {cardModal && <CardModal data={cardModal.data} onSave={saveCard} onClose={() => setCardModal(null)} />}
+      <StickyFooter><button onClick={() => onSave(form)} style={S.saveBtn}>💾 大会を保存</button></StickyFooter>
     </div>
   );
 }
@@ -1049,6 +1048,23 @@ function Btn({ children, onClick, accent }) {
 function SmBtn({ children, onClick, blue, red }) {
   return <button onClick={onClick} style={{ ...S.smBtn, ...(blue ? S.smBtnB : red ? S.smBtnR : {}) }}>{children}</button>;
 }
+function StickyFooter({ children }) {
+  return (
+    <div style={{
+      position: "sticky",
+      bottom: 0,
+      left: 0,
+      right: 0,
+      zIndex: 50,
+      padding: "12px 0 calc(12px + env(safe-area-inset-bottom))",
+      background: "linear-gradient(to top, rgba(255,251,240,1) 60%, rgba(255,251,240,0))",
+      marginTop: 12,
+    }}>
+      {children}
+    </div>
+  );
+}
+
 function Toast({ msg, type }) {
   return <div style={{ position: "fixed", top: 18, left: "50%", transform: "translateX(-50%)", zIndex: 9999, background: type === "err" ? "rgba(220,38,38,.95)" : "rgba(5,150,105,.95)", color: "#fff", padding: "10px 22px", borderRadius: 8, fontWeight: 700, fontSize: 13, boxShadow: "0 4px 20px rgba(0,0,0,.4)", backdropFilter: "blur(8px)", whiteSpace: "nowrap" }}>{msg}</div>;
 }
@@ -1069,7 +1085,7 @@ function BG() {
 /* ─── STYLES ────────────────────────────────────────── */
 const S = {
   root:      { minHeight: "100vh", background: "linear-gradient(160deg,#fffbf0 0%,#fff8e1 40%,#f0f6ff 100%)", color: "#1a1a2e", fontFamily: "'Noto Sans JP',sans-serif", position: "relative", overflowX: "hidden" },
-  wrap:      { position: "relative", zIndex: 1, maxWidth: 860, margin: "0 auto", padding: "0 14px calc(80px + env(safe-area-inset-bottom))" },
+  wrap:      { position: "relative", zIndex: 1, maxWidth: 860, margin: "0 auto", padding: "0 14px calc(120px + env(safe-area-inset-bottom))" },
   header:    { padding: "20px 0 0", marginBottom: 22, borderBottom: "2px solid rgba(230,160,0,.25)" },
   hInner:    { display: "flex", alignItems: "center", justifyContent: "center", gap: 14, marginBottom: 14 },
   title:     { fontFamily: "Rajdhani,sans-serif", fontSize: 22, fontWeight: 700, background: "linear-gradient(90deg,#d97706,#f59e0b,#dc2626)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", letterSpacing: 2, lineHeight: 1.1 },
@@ -1092,7 +1108,7 @@ const S = {
   label:     { fontSize: 11, color: "#92400e", marginBottom: 6, letterSpacing: .3, fontWeight: 600 },
   addBtn:    { width: "100%", background: "rgba(251,191,36,.12)", border: "1.5px dashed rgba(217,119,6,.4)", borderRadius: 10, padding: "14px", color: "#b45309", fontSize: 14, cursor: "pointer", fontFamily: "'Noto Sans JP',sans-serif", fontWeight: 700 },
   smAddBtn:  { background: "rgba(251,191,36,.2)", border: "1.5px solid rgba(217,119,6,.4)", borderRadius: 6, padding: "4px 11px", color: "#b45309", fontSize: 11, cursor: "pointer", fontFamily: "'Noto Sans JP',sans-serif", fontWeight: 700, flexShrink: 0 },
-  saveBtn:   { width: "100%", background: "linear-gradient(135deg,#f59e0b,#dc2626)", border: "none", borderRadius: 12, padding: "17px", color: "#fff", fontWeight: 900, fontSize: 15, cursor: "pointer", fontFamily: "Rajdhani,sans-serif", letterSpacing: 1, marginTop: 8, boxShadow: "0 4px 16px rgba(220,38,38,.25)" },
+  saveBtn:   { width: "100%", background: "linear-gradient(135deg,#f59e0b,#dc2626)", border: "none", borderRadius: 12, padding: "17px", color: "#fff", fontWeight: 900, fontSize: 15, cursor: "pointer", fontFamily: "Rajdhani,sans-serif", letterSpacing: 1, marginTop: 0, boxShadow: "0 4px 16px rgba(220,38,38,.25)" },
   backBtn:   { background: "rgba(180,130,0,.08)", border: "1.5px solid rgba(180,130,0,.2)", borderRadius: 8, padding: "10px 16px", minHeight: 44, color: "#78350f", fontSize: 13, cursor: "pointer", fontFamily: "'Noto Sans JP',sans-serif", flexShrink: 0 },
   btn:       { background: "rgba(245,158,11,.15)", border: "1.5px solid rgba(217,119,6,.4)", borderRadius: 8, padding: "10px 16px", minHeight: 44, color: "#b45309", fontSize: 13, cursor: "pointer", fontFamily: "'Noto Sans JP',sans-serif", fontWeight: 700, flexShrink: 0 },
   btnA:      { background: "linear-gradient(135deg,#f59e0b,#dc2626)", border: "none", color: "#fff", boxShadow: "0 2px 10px rgba(220,38,38,.2)" },
